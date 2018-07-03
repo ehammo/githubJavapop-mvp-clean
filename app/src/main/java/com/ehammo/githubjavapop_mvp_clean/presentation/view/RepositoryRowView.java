@@ -6,6 +6,4 @@ public interface RepositoryRowView {
 
     void setInfo(Repository repository);
 
-
-
 }
