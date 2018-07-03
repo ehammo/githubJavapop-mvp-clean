@@ -8,15 +8,16 @@ import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryRowView;
 public class RepositoryPresenter implements RepositoryContract.RepositoryPresenter{
 
     RepositoryCollection mCollection;
+    RepositoryContract.View mView;
 
     @Override
     public void attachView(RepositoryContract.View view) {
-
+        mView = view;
     }
 
     @Override
     public void dettachView(RepositoryContract.View view) {
-
+        mView = null;
     }
 
     @Override
