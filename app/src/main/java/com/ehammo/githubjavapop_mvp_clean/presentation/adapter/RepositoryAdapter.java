@@ -1,46 +1,27 @@
 package com.ehammo.githubjavapop_mvp_clean.presentation.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
-import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
+import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryContract;
+import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryRowView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryHolder> {
 
-    private RepositoryCollection mCollection;
+    private RepositoryContract.RepositoryPresenter presenter;
 
-    private RepositoryItemCallback mCallback;
 
-    public interface RepositoryItemCallback {
-        void onItemClick(Repository repository);
-    }
-
-    public RepositoryAdapter() {
-        mCollection = new RepositoryCollection();
-        mCallback = null;
-    }
-
-    public void setRepositoryCollection(RepositoryCollection collection) {
-        mCollection = collection;
-        notifyDataSetChanged();
-    }
-
-    public void setRepositoryCallback(RepositoryItemCallback callback) {
-        mCallback = callback;
+    public RepositoryAdapter(RepositoryContract.RepositoryPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -53,17 +34,16 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RepositoryHolder holder, int position) {
-        Repository repository = mCollection.getElement(position);
-        holder.setInfo(repository);
+        presenter.onBindRepositoryRowViewAtPosition(position, holder);
     }
 
     @Override
     public int getItemCount() {
-        return mCollection.size();
+        return presenter.getRepositoriesRowsCount();
     }
 
     class RepositoryHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+            implements View.OnClickListener, RepositoryRowView {
         TextView name;
         TextView desc;
         TextView forks;
@@ -86,18 +66,17 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
 
         @Override
         public void onClick(View v) {
-            if (mCallback != null) {
+            if (presenter != null) {
                 int position = getAdapterPosition();
-                Repository repository = mCollection.getElement(position);
-                mCallback.onItemClick(repository);
+                presenter.onRepositoryChosen(position);
             }
         }
 
         public void setInfo(Repository repository) {
             name.setText(repository.getName());
             desc.setText(repository.getDescription());
-            forks.setText(repository.getForksCount().toString());
-            stars.setText(repository.getStargazersCount().toString());
+            forks.setText(String.valueOf(repository.getForksCount()));
+            stars.setText(String.valueOf(repository.getStargazersCount()));
             username.setText(repository.getOwner().getLogin());
             fullusername.setText(repository.getOwner().getName());
             // todo : colocar glide em data
