@@ -1,6 +1,6 @@
 package com.ehammo.githubjavapop_mvp_clean.presentation.view;
 
-import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
+import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 
 public interface RepositoryContract {
@@ -22,6 +22,6 @@ public interface RepositoryContract {
     interface View {
         void display(RepositoryCollection repositories);
         void showError(String message);
-        void displayPR(Repository rep);
+        void displayPR(RepositoryModel rep);
     }
 }

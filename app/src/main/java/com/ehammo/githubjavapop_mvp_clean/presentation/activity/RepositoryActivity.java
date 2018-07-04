@@ -1,14 +1,16 @@
 package com.ehammo.githubjavapop_mvp_clean.presentation.activity;
 
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
-import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
+import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
+import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
+import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
+import com.ehammo.githubjavapop_mvp_clean.domain.usecase.LoadRepositories;
 import com.ehammo.githubjavapop_mvp_clean.presentation.adapter.RepositoryAdapter;
 import com.ehammo.githubjavapop_mvp_clean.presentation.presenter.RepositoryPresenter;
 import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryContract;
@@ -30,16 +32,22 @@ public class RepositoryActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.rvRepositories);
         mRecyclerView.setAdapter(mRepositoryAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        mPresenter = new RepositoryPresenter();
+        IRepositoryInteractor interactor = new LoadRepositories();
+        mPresenter = new RepositoryPresenter(interactor);
         mRepositoryAdapter = new RepositoryAdapter(mPresenter);
 
         mPresenter.attachView(this);
     }
 
     @Override
-    public void display(RepositoryCollection repositories) {
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
 
+    @Override
+    public void display(RepositoryCollection repositories) {
+        mRepositoryAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -48,7 +56,7 @@ public class RepositoryActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayPR(Repository rep) {
+    public void displayPR(RepositoryModel rep) {
 
     }
 }

@@ -11,20 +11,19 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="titulo"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp"
-        android:textStyle="bold"></TextView>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="lorm lorem ipsun caojdcijqdoqwjdoqwjdiojqwiodjqiowj"></TextView>
+        />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -44,16 +43,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/ivAvatar"
-            android:layout_toRightOf="@+id/ivAvatar"
-            android:text="username" />
+            android:layout_toEndOf="@+id/ivAvatar"
+            />
 
         <TextView
             android:id="@+id/tvFullUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvUsername"
-            android:layout_toRightOf="@+id/ivAvatar"
-            android:text="Ilkkaoi S" />
+            android:layout_toEndOf="@+id/ivAvatar"
+            />
 
     </RelativeLayout>
 
