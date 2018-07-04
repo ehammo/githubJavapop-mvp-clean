@@ -1,25 +1,26 @@
 package com.ehammo.githubjavapop_mvp_clean.domain.usecase;
 
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
-import com.ehammo.githubjavapop_mvp_clean.data.repository.Repository;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.DataStore;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
 
-public class LoadRepositories implements IRepositoryInteractor, Repository.RepositoryCallback {
+public class LoadRepositories implements IRepositoryInteractor, DataSource.RepositoryCallback {
 
-    private Repository mRepository;
+    private DataSource mDataStore;
     private InteractorCallback mCallback;
 
-    public LoadRepositories(Repository repository){
-        // todo : Exception if repository == null
-        this.mRepository = repository;
+    public LoadRepositories(DataSource dataSource){
+        // todo : Exception if dataStore == null
+        this.mDataStore = dataSource;
     }
 
     @Override
     public void load(InteractorCallback callback) {
         // todo : Exception if callback == null
-        mRepository.listRepositories(this);
         mCallback = callback;
+        mDataStore.listRepositories(this);
     }
 
     @Override
