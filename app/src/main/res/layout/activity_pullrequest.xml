@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ehammo.githubjavapop_mvp_clean.presentation.activity.RepositoryActivity">
+    tools:context=".ui.activity.RepositoryActivity">
 
     <RelativeLayout
         android:id="@+id/status"

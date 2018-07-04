@@ -1,4 +1,4 @@
-package com.ehammo.githubjavapop_mvp_clean.presentation.view;
+package com.ehammo.githubjavapop_mvp_clean.ui.view;
 
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
 
