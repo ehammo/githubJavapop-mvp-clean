@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
-import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
+import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContract;
 import com.ehammo.githubjavapop_mvp_clean.ui.view.RepositoryRowView;
 
@@ -43,6 +43,8 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
         return presenter.getRepositoriesRowsCount();
     }
 
+
+
     class RepositoryHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, RepositoryRowView {
         TextView name;
@@ -73,15 +75,15 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
             }
         }
 
-        public void setInfo(RepositoryModel repositoryModel) {
-            name.setText(repositoryModel.getName());
-            desc.setText(repositoryModel.getDescription());
-            forks.setText(String.valueOf(repositoryModel.getForksCount()));
-            stars.setText(String.valueOf(repositoryModel.getStargazersCount()));
-            username.setText(repositoryModel.getOwner().getLogin());
-            fullusername.setText(repositoryModel.getOwner().getName());
+        public void setInfo(Repository repository) {
+            name.setText(repository.getName());
+            desc.setText(repository.getDescription());
+            forks.setText(String.valueOf(repository.getForksCount()));
+            stars.setText(String.valueOf(repository.getStargazersCount()));
+            username.setText(repository.getOwner().getLogin());
+            fullusername.setText(repository.getOwner().getName());
             // todo : colocar glide em data
-//            Glide.with(activity).load(repositoryModel.getOwner().getAvatarUrl()).asBitmap()
+//            Glide.with(activity).load(repository.getOwner().getAvatarUrl()).asBitmap()
 //                    .into(new SimpleTarget<Bitmap>(320, 240) {
 //                        @Override
 //                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {

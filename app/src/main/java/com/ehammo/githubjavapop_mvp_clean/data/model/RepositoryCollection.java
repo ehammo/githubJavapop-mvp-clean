@@ -1,35 +1,32 @@
 
 package com.ehammo.githubjavapop_mvp_clean.data.model;
 
-import com.ehammo.githubjavapop_mvp_clean.data.repository.Repository;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class RepositoryCollection {
 
-    private List<RepositoryModel> mRepositories;
+    private List<Repository> mRepositories;
 
     public RepositoryCollection() {
         mRepositories = new ArrayList<>();
     }
 
-    public void addRepository(RepositoryModel repositoryModel) {
-        if (repositoryModel == null) {
+    public void addRepository(Repository repository) {
+        if (repository == null) {
             throw new IllegalArgumentException("Recipe could not be null");
         }
 
-        mRepositories.add(repositoryModel);
+        mRepositories.add(repository);
     }
 
-    public Iterator<RepositoryModel> iterator() {
+    public Iterator<Repository> iterator() {
         return mRepositories.iterator();
     }
 
-    public RepositoryModel getElement(int position) {
-        if (position <= 0 || position > mRepositories.size()) {
+    public Repository getElement(int position) {
+        if (position < 0 || position > mRepositories.size()) {
             throw new IllegalArgumentException("Position is out of range");
         }
 
@@ -37,7 +34,7 @@ public class RepositoryCollection {
     }
 
     public void addAll(RepositoryCollection collection){
-        Iterator<RepositoryModel> iterator = collection.iterator();
+        Iterator<Repository> iterator = collection.iterator();
         while (iterator.hasNext()){
             this.addRepository(iterator.next());
         }
