@@ -1,4 +1,4 @@
-package com.ehammo.githubjavapop_mvp_clean.presentation.adapter;
+package com.ehammo.githubjavapop_mvp_clean.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
-import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryContract;
-import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryRowView;
+import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContract;
+import com.ehammo.githubjavapop_mvp_clean.ui.view.RepositoryRowView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

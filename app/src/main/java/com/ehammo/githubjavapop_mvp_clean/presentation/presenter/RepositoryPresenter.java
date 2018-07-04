@@ -4,26 +4,29 @@ import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
-import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryContract;
-import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryRowView;
+import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContract;
+import com.ehammo.githubjavapop_mvp_clean.ui.view.RepositoryRowView;
+import com.ehammo.githubjavapop_mvp_clean.ui.view.View;
 
 public class RepositoryPresenter implements RepositoryContract.RepositoryPresenter, InteractorCallback{
 
     private RepositoryCollection mCollection;
-    private RepositoryContract.View mView;
+    private View mView;
     private IRepositoryInteractor mInteractor;
 
     public RepositoryPresenter(IRepositoryInteractor interactor){
+        // todo : exception if interactor == null
         this.mInteractor = interactor;
+        mCollection = new RepositoryCollection();
     }
 
     @Override
-    public void attachView(RepositoryContract.View view) {
+    public void attachView(View view) {
         this.mView = view;
     }
 
     @Override
-    public void dettachView(RepositoryContract.View view) {
+    public void dettachView(View view) {
         this.mView = null;
     }
 

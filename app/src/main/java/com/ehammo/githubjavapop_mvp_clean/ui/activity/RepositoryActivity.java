@@ -1,4 +1,4 @@
-package com.ehammo.githubjavapop_mvp_clean.presentation.activity;
+package com.ehammo.githubjavapop_mvp_clean.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,14 +9,14 @@ import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryModel;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
-import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
 import com.ehammo.githubjavapop_mvp_clean.domain.usecase.LoadRepositories;
-import com.ehammo.githubjavapop_mvp_clean.presentation.adapter.RepositoryAdapter;
+import com.ehammo.githubjavapop_mvp_clean.ui.adapter.RepositoryAdapter;
 import com.ehammo.githubjavapop_mvp_clean.presentation.presenter.RepositoryPresenter;
-import com.ehammo.githubjavapop_mvp_clean.presentation.view.RepositoryContract;
+import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContract;
+import com.ehammo.githubjavapop_mvp_clean.ui.view.View;
 
 public class RepositoryActivity extends AppCompatActivity
-        implements RepositoryContract.View {
+        implements View {
 
     private RepositoryContract.RepositoryPresenter mPresenter;
 
@@ -32,7 +32,8 @@ public class RepositoryActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.rvRepositories);
         mRecyclerView.setAdapter(mRepositoryAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        IRepositoryInteractor interactor = new LoadRepositories();
+        // todo : create repository
+        IRepositoryInteractor interactor = new LoadRepositories(null);
         mPresenter = new RepositoryPresenter(interactor);
         mRepositoryAdapter = new RepositoryAdapter(mPresenter);
 

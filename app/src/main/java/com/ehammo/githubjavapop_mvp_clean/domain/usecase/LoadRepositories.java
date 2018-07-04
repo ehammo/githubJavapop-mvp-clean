@@ -10,12 +10,14 @@ public class LoadRepositories implements IRepositoryInteractor, Repository.Repos
     private Repository mRepository;
     private InteractorCallback mCallback;
 
-    public LoadRepositories(){
-
+    public LoadRepositories(Repository repository){
+        // todo : Exception if repository == null
+        this.mRepository = repository;
     }
 
     @Override
     public void load(InteractorCallback callback) {
+        // todo : Exception if callback == null
         mRepository.listRepositories(this);
         mCallback = callback;
     }
