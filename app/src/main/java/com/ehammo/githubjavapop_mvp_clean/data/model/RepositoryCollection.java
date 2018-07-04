@@ -1,35 +1,34 @@
 
 package com.ehammo.githubjavapop_mvp_clean.data.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.Repository;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 public class RepositoryCollection {
 
-    private List<Repository> mRepositories;
+    private List<RepositoryModel> mRepositories;
 
     public RepositoryCollection() {
         mRepositories = new ArrayList<>();
     }
 
-    public void addRepository(Repository repository) {
-        if (repository == null) {
+    public void addRepository(RepositoryModel repositoryModel) {
+        if (repositoryModel == null) {
             throw new IllegalArgumentException("Recipe could not be null");
         }
 
-        mRepositories.add(repository);
+        mRepositories.add(repositoryModel);
     }
 
-    public Iterator<Repository> iterator() {
+    public Iterator<RepositoryModel> iterator() {
         return mRepositories.iterator();
     }
 
-    public Repository getElement(int position) {
+    public RepositoryModel getElement(int position) {
         if (position <= 0 || position > mRepositories.size()) {
             throw new IllegalArgumentException("Position is out of range");
         }
@@ -37,6 +36,14 @@ public class RepositoryCollection {
         return mRepositories.get(position);
     }
 
+    public void addAll(RepositoryCollection collection){
+        Iterator<RepositoryModel> iterator = collection.iterator();
+        while (iterator.hasNext()){
+            this.addRepository(iterator.next());
+        }
+    }
+
+    public void clear() { mRepositories.clear(); }
 
     public int size() {
         return mRepositories.size();

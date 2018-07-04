@@ -16,7 +16,7 @@
             android:id="@+id/open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="- open "
+            android:text="@string/PR_open_placeholder"
             android:textColor="@android:color/holo_orange_dark"
             android:textStyle="bold" />
 
@@ -24,8 +24,8 @@
             android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/open"
-            android:text="/ - closed"
+            android:layout_toEndOf="@+id/open"
+            android:text="@string/PR_close_placeholder"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -36,7 +36,7 @@
         android:layout_below="@id/status"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"></android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="30dp"/>
 
     <RelativeLayout
         android:id="@+id/noPullRequests"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_pull_requests"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
 

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Repository implements Serializable {
+public class RepositoryModel implements Serializable {
 
     @SerializedName("id")
     @Expose

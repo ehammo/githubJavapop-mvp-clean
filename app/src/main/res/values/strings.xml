@@ -4,6 +4,7 @@
     <string name="no_repositories">Não temos repositórios para exibir. Verifique sua conexão.</string>
     <string name="open">opened</string>
     <string name="close">closed</string>
-
+    <string name="PR_open_placeholder">- open </string>
+    <string name="PR_close_placeholder">/ - closed </string>
 
 </resources>
