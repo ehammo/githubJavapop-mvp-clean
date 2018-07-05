@@ -5,6 +5,7 @@ import android.provider.ContactsContract;
 import com.ehammo.githubjavapop_mvp_clean.data.mapper.WebRepositoryCollectionMapper;
 import com.ehammo.githubjavapop_mvp_clean.data.model.WebRepositoryList;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.local.LocalDataSource;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -16,11 +17,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RemoteDataSource implements DataSource {
 
-    private String BASE_URL;
+    private static final String BASE_URL = "https://api.github.com/";
     private Retrofit retrofit;
+    private static DataSource instance;
 
-    public RemoteDataSource(String url){
-        this.BASE_URL = url;
+    public static DataSource getInstance(){
+        if (instance == null) {
+            instance = new RemoteDataSource();
+        }
+        return instance;
+    }
+
+    private RemoteDataSource(){
         buildRetrofit();
     }
 
@@ -62,5 +70,10 @@ public class RemoteDataSource implements DataSource {
                 callback.errorMessage(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public boolean isCacheable() {
+        return false;
     }
 }

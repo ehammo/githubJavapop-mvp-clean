@@ -11,4 +11,6 @@ public interface DataSource {
 
     void listRepositories(RepositoryCallback callback, int page);
 
+    boolean isCacheable();
+
 }
