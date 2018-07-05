@@ -1,7 +1,6 @@
 package com.ehammo.githubjavapop_mvp_clean.ui.activity;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +13,10 @@ import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSourceFactory;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataStore;
-import com.ehammo.githubjavapop_mvp_clean.data.repository.local.LocalDataSource;
-import com.ehammo.githubjavapop_mvp_clean.data.repository.remote.RemoteDataSource;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataStore;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.local.CacheManager;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.local.ICacheManager;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataSourceFactory;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.usecase.LoadRepositories;
 import com.ehammo.githubjavapop_mvp_clean.ui.adapter.RepositoryAdapter;
@@ -44,7 +45,9 @@ public class RepositoryActivity extends AppCompatActivity
         mPlaceholder = findViewById(R.id.noRepositories);
 
         // todo : qm inicia o data store?
-        DataStore dataStore = new DataSourceFactory("https://api.github.com/");
+        IDataSourceFactory dataSourceFactory = new DataSourceFactory();
+        ICacheManager cacheManager = new CacheManager(new Handler());
+        IDataStore dataStore = new DataStore(dataSourceFactory, cacheManager);
 //        IRepositoryInteractor interactor = new LoadRepositories(new LocalDataSource());
         IRepositoryInteractor interactor = new LoadRepositories(dataStore);
         mPresenter = new RepositoryPresenter(interactor);

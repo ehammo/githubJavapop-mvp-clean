@@ -5,11 +5,22 @@ import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
 
-public class LocalDataSource implements DataSource {
+public class LocalDataSource implements CacheDataSource {
 
-    @Override
-    public void listRepositories(RepositoryCallback callback, int page) {
-        RepositoryCollection repositoryCollection = new RepositoryCollection();
+    private RepositoryCollection repositoryCollection;
+    private static CacheDataSource instance;
+    private boolean isValid;
+
+    public static CacheDataSource getInstance(){
+        if (instance == null) {
+            instance = new LocalDataSource();
+        }
+        return instance;
+    }
+
+    private LocalDataSource(){
+        repositoryCollection = new RepositoryCollection();
+        isValid = false;
         Repository repository1 = new Repository();
         Repository repository2 = new Repository();
         Repository repository3 = new Repository();
@@ -61,6 +72,28 @@ public class LocalDataSource implements DataSource {
         repositoryCollection.addRepository(repository4);
         repositoryCollection.addRepository(repository5);
         repositoryCollection.addRepository(repository6);
+    }
+
+    @Override
+    public void invalidateCache() {
+        isValid = false;
+    }
+
+    @Override
+    public void updateCache(RepositoryCollection repositoryCollection) {
+        this.repositoryCollection.clear();
+        this.repositoryCollection.addAll(repositoryCollection.iterator());
+        isValid = true;
+    }
+
+    @Override
+    public void listRepositories(RepositoryCallback callback, int page) {
         callback.listRepositories(repositoryCollection);
     }
+
+    @Override
+    public boolean isCacheable() {
+        return true;
+    }
 }
+

@@ -2,16 +2,16 @@ package com.ehammo.githubjavapop_mvp_clean.domain.usecase;
 
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
-import com.ehammo.githubjavapop_mvp_clean.data.repository.DataStore;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataStore;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
 
 public class LoadRepositories implements IRepositoryInteractor, DataSource.RepositoryCallback {
 
-    private DataStore mDataStore;
+    private IDataStore mDataStore;
     private InteractorCallback mCallback;
 
-    public LoadRepositories(DataStore dataStore){
+    public LoadRepositories(IDataStore dataStore){
         // todo : Exception if dataStore == null
         this.mDataStore = dataStore;
     }

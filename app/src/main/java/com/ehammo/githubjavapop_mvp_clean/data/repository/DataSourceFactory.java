@@ -1,42 +1,22 @@
 package com.ehammo.githubjavapop_mvp_clean.data.repository;
 
-import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.local.LocalDataSource;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.remote.RemoteDataSource;
 
-public class DataSourceFactory implements DataStore, DataSource.RepositoryCallback {
+public class DataSourceFactory implements IDataSourceFactory {
 
-    private DataSource cacheDataSource;
-    private DataSource remoteDataSource;
     private boolean validCache;
-    private DataSource.RepositoryCallback mCallback;
 
-    public DataSourceFactory(String url){
-        cacheDataSource = new LocalDataSource();
-        remoteDataSource = new RemoteDataSource(url);
+    public DataSourceFactory(){
         validCache = false;
     }
 
-    private void invalidateCache(){ validCache = false; }
-
     @Override
-    public void listRepositories(DataSource.RepositoryCallback callback, int page) {
+    public DataSource getDataSource() {
         if (validCache) {
-            cacheDataSource.listRepositories(callback, page);
+            return LocalDataSource.getInstance();
         } else {
-            mCallback = callback;
-            remoteDataSource.listRepositories(this, page);
+            return RemoteDataSource.getInstance();
         }
-    }
-
-    @Override
-    public void listRepositories(RepositoryCollection repositories) {
-        // todo : update cache
-        mCallback.listRepositories(repositories);
-    }
-
-    @Override
-    public void errorMessage(String message) {
-
     }
 }
