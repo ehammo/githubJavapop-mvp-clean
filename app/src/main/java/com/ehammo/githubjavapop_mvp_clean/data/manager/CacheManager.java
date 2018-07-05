@@ -1,9 +1,9 @@
-package com.ehammo.githubjavapop_mvp_clean.data.repository.local;
+package com.ehammo.githubjavapop_mvp_clean.data.manager;
 
-import android.app.AlarmManager;
 import android.os.Handler;
 
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.local.LocalDataSource;
 
 
 public class CacheManager implements ICacheManager {

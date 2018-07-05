@@ -9,13 +9,14 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
+import com.ehammo.githubjavapop_mvp_clean.data.manager.NetworkManager;
 import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSourceFactory;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataStore;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataStore;
-import com.ehammo.githubjavapop_mvp_clean.data.repository.local.CacheManager;
-import com.ehammo.githubjavapop_mvp_clean.data.repository.local.ICacheManager;
+import com.ehammo.githubjavapop_mvp_clean.data.manager.CacheManager;
+import com.ehammo.githubjavapop_mvp_clean.data.manager.ICacheManager;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataSourceFactory;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.usecase.LoadRepositories;
@@ -45,7 +46,7 @@ public class RepositoryActivity extends AppCompatActivity
         mPlaceholder = findViewById(R.id.noRepositories);
 
         // todo : qm inicia o data store?
-        IDataSourceFactory dataSourceFactory = new DataSourceFactory();
+        IDataSourceFactory dataSourceFactory = new DataSourceFactory(new NetworkManager(this));
         ICacheManager cacheManager = new CacheManager(new Handler());
         IDataStore dataStore = new DataStore(dataSourceFactory, cacheManager);
 //        IRepositoryInteractor interactor = new LoadRepositories(new LocalDataSource());
