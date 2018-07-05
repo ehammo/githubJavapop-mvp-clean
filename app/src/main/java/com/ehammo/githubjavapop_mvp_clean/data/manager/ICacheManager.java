@@ -1,4 +1,4 @@
-package com.ehammo.githubjavapop_mvp_clean.data.repository.local;
+package com.ehammo.githubjavapop_mvp_clean.data.manager;
 
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 
