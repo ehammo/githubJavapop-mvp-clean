@@ -12,7 +12,10 @@ import android.widget.RelativeLayout;
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSourceFactory;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.DataStore;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.local.LocalDataSource;
+import com.ehammo.githubjavapop_mvp_clean.data.repository.remote.RemoteDataSource;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.usecase.LoadRepositories;
 import com.ehammo.githubjavapop_mvp_clean.ui.adapter.RepositoryAdapter;
@@ -40,7 +43,10 @@ public class RepositoryActivity extends AppCompatActivity
         mProgress = findViewById(R.id.progress);
         mPlaceholder = findViewById(R.id.noRepositories);
 
-        IRepositoryInteractor interactor = new LoadRepositories(new LocalDataSource());
+        // todo : qm inicia o data store?
+        DataStore dataStore = new DataSourceFactory("https://api.github.com/");
+//        IRepositoryInteractor interactor = new LoadRepositories(new LocalDataSource());
+        IRepositoryInteractor interactor = new LoadRepositories(dataStore);
         mPresenter = new RepositoryPresenter(interactor);
         mRepositoryAdapter = new RepositoryAdapter(mPresenter);
 

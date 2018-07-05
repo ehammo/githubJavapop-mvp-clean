@@ -8,19 +8,19 @@ import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
 
 public class LoadRepositories implements IRepositoryInteractor, DataSource.RepositoryCallback {
 
-    private DataSource mDataStore;
+    private DataStore mDataStore;
     private InteractorCallback mCallback;
 
-    public LoadRepositories(DataSource dataSource){
+    public LoadRepositories(DataStore dataStore){
         // todo : Exception if dataStore == null
-        this.mDataStore = dataSource;
+        this.mDataStore = dataStore;
     }
 
     @Override
     public void load(InteractorCallback callback) {
         // todo : Exception if callback == null
         mCallback = callback;
-        mDataStore.listRepositories(this);
+        mDataStore.listRepositories(this,0);
     }
 
     @Override

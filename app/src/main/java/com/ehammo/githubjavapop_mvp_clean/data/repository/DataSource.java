@@ -9,7 +9,6 @@ public interface DataSource {
         void errorMessage(String message);
     }
 
-    void listRepositories(RepositoryCallback callback);
-
+    void listRepositories(RepositoryCallback callback, int page);
 
 }
