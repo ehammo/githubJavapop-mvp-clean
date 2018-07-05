@@ -5,15 +5,10 @@ import com.ehammo.githubjavapop_mvp_clean.data.repository.remote.RemoteDataSourc
 
 public class DataSourceFactory implements IDataSourceFactory {
 
-    private boolean validCache;
-
-    public DataSourceFactory(){
-        validCache = false;
-    }
 
     @Override
     public DataSource getDataSource() {
-        if (validCache) {
+        if (LocalDataSource.getInstance().isValid()) {
             return LocalDataSource.getInstance();
         } else {
             return RemoteDataSource.getInstance();
