@@ -18,6 +18,11 @@ public class LocalDataSource implements CacheDataSource {
         return instance;
     }
 
+    @Override
+    public boolean isValid() {
+        return isValid;
+    }
+
     private LocalDataSource(){
         repositoryCollection = new RepositoryCollection();
         isValid = false;
