@@ -8,7 +8,7 @@ import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
 public class LocalDataSource implements DataSource {
 
     @Override
-    public void listRepositories(RepositoryCallback callback) {
+    public void listRepositories(RepositoryCallback callback, int page) {
         RepositoryCollection repositoryCollection = new RepositoryCollection();
         Repository repository1 = new Repository();
         Repository repository2 = new Repository();

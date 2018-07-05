@@ -33,8 +33,7 @@ public class RepositoryCollection {
         return mRepositories.get(position);
     }
 
-    public void addAll(RepositoryCollection collection){
-        Iterator<Repository> iterator = collection.iterator();
+    public void addAll(Iterator<Repository> iterator){
         while (iterator.hasNext()){
             this.addRepository(iterator.next());
         }

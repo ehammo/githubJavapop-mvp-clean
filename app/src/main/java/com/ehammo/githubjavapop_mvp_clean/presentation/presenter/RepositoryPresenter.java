@@ -34,7 +34,6 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
 
     @Override
     public void onResume() {
-        Log.d("Presenter", "onResume");
         mView.inProgress();
         mInteractor.load(this);
     }
@@ -46,7 +45,6 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
 
     @Override
     public void onRefresh() {
-        Log.d("Presenter", "onRefresh");
         if (mView != null) {
             mView.endProgress();
             mView.display(mCollection);
@@ -55,16 +53,13 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
 
     @Override
     public void onResultReceive(RepositoryCollection collection) {
-        Log.d("Presenter", "onResult");
         mCollection.clear();
-        mCollection.addAll(collection);
-        Log.d("Presenter", "CollectionSize="+mCollection.size());
+        mCollection.addAll(collection.iterator());
         this.onRefresh();
     }
 
     @Override
     public void onError(String message) {
-        Log.d("Presenter", "onError");
         if (mView != null) {
             mView.endProgress();
             mView.showError(message);
@@ -78,7 +73,6 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
 
     @Override
     public void onBindRepositoryRowViewAtPosition(int position, RepositoryRowView holder) {
-        Log.d("Presenter", "pos="+position);
         Repository repository = mCollection.getElement(position);
         holder.setInfo(repository);
     }
