@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/square_shadow">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/repInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
