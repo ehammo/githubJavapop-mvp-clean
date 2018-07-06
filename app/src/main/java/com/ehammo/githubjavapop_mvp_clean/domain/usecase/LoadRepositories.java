@@ -6,20 +6,20 @@ import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataStore;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.InteractorCallback;
 
+import org.jetbrains.annotations.NotNull;
+
 public class LoadRepositories implements IRepositoryInteractor, DataSource.RepositoryCallback {
 
     private IDataStore mDataStore;
     private InteractorCallback mCallback;
 
-    public LoadRepositories(IDataStore dataStore){
-        // todo : Exception if dataStore == null
+    public LoadRepositories(@NotNull IDataStore dataStore) {
         this.mDataStore = dataStore;
     }
 
     @Override
-    public void load(InteractorCallback callback) {
-        // todo : Exception if callback == null
-        mCallback = callback;
+    public void load(@NotNull InteractorCallback callback) {
+        this.mCallback = callback;
         mDataStore.listRepositories(this,0);
     }
 

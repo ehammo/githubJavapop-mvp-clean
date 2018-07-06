@@ -6,11 +6,13 @@ import com.ehammo.githubjavapop_mvp_clean.data.manager.NetworkManager;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.local.LocalDataSource;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.remote.RemoteDataSource;
 
+import org.jetbrains.annotations.NotNull;
+
 public class DataSourceFactory implements IDataSourceFactory {
 
     private NetworkManager networkManager;
 
-    public DataSourceFactory(NetworkManager networkManager){
+    public DataSourceFactory(@NotNull NetworkManager networkManager) {
         this.networkManager = networkManager;
     }
 

@@ -98,7 +98,7 @@ public class RepositoryActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         // todo : remove View form detach / check onPause
-        mPresenter.dettachView(this);
+        mPresenter.dettachView();
         mPresenter.onPause();
     }
 }

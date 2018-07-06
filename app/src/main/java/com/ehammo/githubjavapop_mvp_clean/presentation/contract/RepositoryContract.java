@@ -7,7 +7,7 @@ public interface RepositoryContract {
 
     interface BasePresenter {
         void attachView(View view);
-        void dettachView(View view);
+        void dettachView();
         void onResume();
         void onPause();
         void onRefresh();

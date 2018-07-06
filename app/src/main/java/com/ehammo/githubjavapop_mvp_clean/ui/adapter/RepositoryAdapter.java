@@ -1,7 +1,6 @@
 package com.ehammo.githubjavapop_mvp_clean.ui.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,8 @@ import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContract;
 import com.ehammo.githubjavapop_mvp_clean.ui.view.RepositoryRowView;
 
+import org.jetbrains.annotations.NotNull;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryHolder> {
@@ -20,13 +21,13 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
     private RepositoryContract.RepositoryPresenter presenter;
 
 
-    public RepositoryAdapter(RepositoryContract.RepositoryPresenter presenter) {
+    public RepositoryAdapter(@NotNull RepositoryContract.RepositoryPresenter presenter) {
         this.presenter = presenter;
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public RepositoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RepositoryHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.element_repository, parent, false);
@@ -34,7 +35,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RepositoryHolder holder, int position) {
+    public void onBindViewHolder(@NotNull RepositoryHolder holder, int position) {
         presenter.onBindRepositoryRowViewAtPosition(position, holder);
     }
 
@@ -42,8 +43,6 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
     public int getItemCount() {
         return presenter.getRepositoriesRowsCount();
     }
-
-
 
     class RepositoryHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, RepositoryRowView {

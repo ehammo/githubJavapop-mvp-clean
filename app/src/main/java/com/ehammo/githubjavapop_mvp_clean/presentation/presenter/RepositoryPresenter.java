@@ -1,7 +1,5 @@
 package com.ehammo.githubjavapop_mvp_clean.presentation.presenter;
 
-import android.util.Log;
-
 import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
@@ -10,16 +8,17 @@ import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContra
 import com.ehammo.githubjavapop_mvp_clean.ui.view.RepositoryRowView;
 import com.ehammo.githubjavapop_mvp_clean.ui.view.View;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RepositoryPresenter implements RepositoryContract.RepositoryPresenter, InteractorCallback{
 
     private RepositoryCollection mCollection;
     private View mView;
     private IRepositoryInteractor mInteractor;
 
-    public RepositoryPresenter(IRepositoryInteractor interactor){
-        // todo : exception if interactor == null
+    public RepositoryPresenter(@NotNull IRepositoryInteractor interactor) {
         this.mInteractor = interactor;
-        mCollection = new RepositoryCollection();
+        this.mCollection = new RepositoryCollection();
     }
 
     @Override
@@ -28,14 +27,16 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
     }
 
     @Override
-    public void dettachView(View view) {
+    public void dettachView() {
         this.mView = null;
     }
 
     @Override
     public void onResume() {
-        mView.inProgress();
-        mInteractor.load(this);
+        if (mView != null) {
+            mView.inProgress();
+            mInteractor.load(this);
+        }
     }
 
     @Override
@@ -72,7 +73,7 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
     }
 
     @Override
-    public void onBindRepositoryRowViewAtPosition(int position, RepositoryRowView holder) {
+    public void onBindRepositoryRowViewAtPosition(int position, @NotNull RepositoryRowView holder) {
         Repository repository = mCollection.getElement(position);
         holder.setInfo(repository);
     }

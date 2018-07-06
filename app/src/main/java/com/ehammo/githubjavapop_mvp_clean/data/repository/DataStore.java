@@ -1,7 +1,9 @@
 package com.ehammo.githubjavapop_mvp_clean.data.repository;
 
-import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.manager.ICacheManager;
+import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
+
+import org.jetbrains.annotations.NotNull;
 
 public class DataStore implements IDataStore, DataSource.RepositoryCallback {
 
@@ -10,15 +12,15 @@ public class DataStore implements IDataStore, DataSource.RepositoryCallback {
     private ICacheManager cacheManager;
 
 
-    public DataStore(IDataSourceFactory dataSourceFactory, ICacheManager cacheManager){
-        factory = dataSourceFactory;
+    public DataStore(@NotNull IDataSourceFactory dataSourceFactory, @NotNull ICacheManager cacheManager) {
+        this.factory = dataSourceFactory;
         this.cacheManager = cacheManager;
     }
 
 
     @Override
-    public void listRepositories(DataSource.RepositoryCallback callback, int page) {
-        mCallback = callback;
+    public void listRepositories(@NotNull DataSource.RepositoryCallback callback, int page) {
+        this.mCallback = callback;
         DataSource dataSource = factory.getDataSource();
         if(dataSource.isCacheable()){
             dataSource.listRepositories(callback, page);
