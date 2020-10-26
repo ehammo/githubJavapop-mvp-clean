@@ -17,15 +17,10 @@ public class CacheManager implements ICacheManager {
     }
 
     @Override
-    public void updateCache(RepositoryCollection collection) {
+    public void updateCache(RepositoryCollection collection, int page) {
         if (collection != null) {
-            LocalDataSource.getInstance().updateCache(collection);
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    invalidateCache();
-                }
-            }, 60 * 1000);
+            LocalDataSource.getInstance().updateCache(collection, page);
+            mHandler.postDelayed(() -> invalidateCache(), 60 * 1000);
         }
     }
 

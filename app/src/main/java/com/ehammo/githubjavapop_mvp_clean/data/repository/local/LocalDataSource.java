@@ -5,10 +5,12 @@ import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
 import com.ehammo.githubjavapop_mvp_clean.data.model.RepositoryCollection;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
 
+import java.util.HashMap;
+
 public class LocalDataSource implements CacheDataSource {
 
     // TODO: use Room
-    private final RepositoryCollection repositoryCollection;
+    private final HashMap<Integer, RepositoryCollection> cache;
     private static CacheDataSource instance;
     private boolean isValid;
 
@@ -26,7 +28,7 @@ public class LocalDataSource implements CacheDataSource {
 
     private LocalDataSource(){
         // todo : transform this into SQLlite? maybe?
-        repositoryCollection = new RepositoryCollection();
+        cache = new HashMap<>();
         isValid = false;
     }
 
@@ -36,15 +38,16 @@ public class LocalDataSource implements CacheDataSource {
     }
 
     @Override
-    public void updateCache(RepositoryCollection repositoryCollection) {
-        this.repositoryCollection.clear();
-        this.repositoryCollection.addAll(repositoryCollection.iterator());
+    public void updateCache(RepositoryCollection repositoryCollection, int page) {
+        cache.put(page, repositoryCollection);
         isValid = true;
     }
 
     @Override
     public void listRepositories(RepositoryCallback callback, int page) {
-        callback.listRepositories(repositoryCollection);
+        RepositoryCollection rc = cache.get(page);
+        if (rc == null) rc = new RepositoryCollection();
+        callback.listRepositories(rc, page);
     }
 
     @Override

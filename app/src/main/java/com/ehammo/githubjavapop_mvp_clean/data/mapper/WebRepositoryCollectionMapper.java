@@ -14,7 +14,7 @@ public class WebRepositoryCollectionMapper {
 
     public RepositoryCollection fromWebToCollection(@NotNull WebRepositoryList webRepositoryList) {
         RepositoryCollection repositoryCollection = new RepositoryCollection();
-        repositoryCollection.addAll(webRepositoryList.getItems().iterator());
+        repositoryCollection.addAll(webRepositoryList.getItems());
         return repositoryCollection;
     }
 
@@ -26,11 +26,7 @@ public class WebRepositoryCollectionMapper {
     }
 
     private List<Repository> fromCollectionToList(RepositoryCollection repositoryCollection){
-        List<Repository> repositories = new ArrayList<>();
-        for(Iterator<Repository> iterator = repositoryCollection.iterator(); iterator.hasNext();){
-            repositories.add(iterator.next());
-        }
-        return repositories;
+        return repositoryCollection.toList();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.ehammo.githubjavapop_mvp_clean.data.repository.remote;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.ehammo.githubjavapop_mvp_clean.data.mapper.WebRepositoryCollectionMapper;
 import com.ehammo.githubjavapop_mvp_clean.data.model.WebRepositoryList;
@@ -46,16 +47,21 @@ public class RemoteDataSource implements DataSource {
 
     @Override
     public void listRepositories(final RepositoryCallback callback, int page) {
+        Log.d("MainActivity", "GET page "+page);
         retrofit.create(RetrofitDataSource.class).
                 getRepositories("language:Java", "stars", page)
                 .enqueue(new Callback<WebRepositoryList>() {
             @Override
             public void onResponse(Call<WebRepositoryList> call, Response<WebRepositoryList> response) {
+                Log.d("MainActivity", "GET page "+page+" response");
                 if(response.isSuccessful()) {
                     WebRepositoryList webRepositoryList = response.body();
-                    if(webRepositoryList!=null) {
+                    if (webRepositoryList != null) {
+                        Log.d("MainActivity", "listSize: " +
+                                webRepositoryList.getItems().size());
                         WebRepositoryCollectionMapper mapper = new WebRepositoryCollectionMapper();
-                        callback.listRepositories(mapper.fromWebToCollection(webRepositoryList));
+                        callback.listRepositories(
+                                mapper.fromWebToCollection(webRepositoryList), page);
                     } else {
                         callback.errorMessage("No repositories");
                     }

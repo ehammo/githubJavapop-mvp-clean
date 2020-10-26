@@ -4,25 +4,14 @@ package com.ehammo.githubjavapop_mvp_clean.data.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RepositoryCollection {
 
-    private final List<Repository> mRepositories;
+    private ArrayList<Repository> mRepositories;
 
     public RepositoryCollection() {
         mRepositories = new ArrayList<>();
-    }
-
-    public void addRepository(Repository repository) {
-        if (repository == null) {
-            throw new IllegalArgumentException("Recipe could not be null");
-        }
-
-        mRepositories.add(repository);
-    }
-
-    public Iterator<Repository> iterator() {
-        return mRepositories.iterator();
     }
 
     public Repository getElement(int position) {
@@ -33,10 +22,12 @@ public class RepositoryCollection {
         return mRepositories.get(position);
     }
 
-    public void addAll(Iterator<Repository> iterator){
-        while (iterator.hasNext()){
-            this.addRepository(iterator.next());
-        }
+    public void addAll(List<Repository> rc){
+        mRepositories.addAll(rc);
+        mRepositories = mRepositories
+                .stream()
+                .distinct()
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void clear() { mRepositories.clear(); }
@@ -45,5 +36,7 @@ public class RepositoryCollection {
         return mRepositories.size();
     }
 
-
+    public List<Repository> toList() {
+        return new ArrayList<>(mRepositories);
+    }
 }

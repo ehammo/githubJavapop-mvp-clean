@@ -17,19 +17,13 @@ public class LoadRepositories implements IRepositoryInteractor, DataSource.Repos
         this.mDataStore = dataStore;
     }
 
-    @Override
-    public void load(@NotNull InteractorCallback callback) {
-        load(callback, 0);
-    }
-
-    @Override
-    public void load(InteractorCallback callback, int page) {
+    public void load(@NotNull InteractorCallback callback, int page) {
         this.mCallback = callback;
         mDataStore.listRepositories(this, page);
     }
 
     @Override
-    public void listRepositories(RepositoryCollection repositories) {
+    public void listRepositories(RepositoryCollection repositories, int page) {
         mCallback.onResultReceive(repositories);
     }
 
