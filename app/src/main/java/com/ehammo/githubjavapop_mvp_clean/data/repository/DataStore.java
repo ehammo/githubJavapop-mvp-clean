@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 public class DataStore implements IDataStore, DataSource.RepositoryCallback {
 
     private DataSource.RepositoryCallback mCallback;
-    private IDataSourceFactory factory;
-    private ICacheManager cacheManager;
+    private final IDataSourceFactory factory;
+    private final ICacheManager cacheManager;
 
 
     public DataStore(@NotNull IDataSourceFactory dataSourceFactory, @NotNull ICacheManager cacheManager) {
@@ -22,7 +22,7 @@ public class DataStore implements IDataStore, DataSource.RepositoryCallback {
     public void listRepositories(@NotNull DataSource.RepositoryCallback callback, int page) {
         this.mCallback = callback;
         DataSource dataSource = factory.getDataSource();
-        if(dataSource.isCacheable()){
+        if (dataSource.isCacheable()) {
             dataSource.listRepositories(callback, page);
         } else {
             dataSource.listRepositories(this, page);

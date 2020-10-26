@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class NetworkManager implements INetworkManager {
 
-    private Context mContext;
+    private final Context mContext;
 
     public NetworkManager(@NotNull Context mContext) {
         this.mContext = mContext;
@@ -18,6 +18,6 @@ public class NetworkManager implements INetworkManager {
         ConnectivityManager cm = (ConnectivityManager)
                 mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        return cm !=null && cm.getActiveNetwork() != null;
+        return cm != null && cm.getActiveNetwork() != null;
     }
 }

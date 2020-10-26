@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CacheManager implements ICacheManager {
 
-    private Handler mHandler;
+    private final Handler mHandler;
 
     public CacheManager(@NotNull Handler handler) {
         mHandler = handler;

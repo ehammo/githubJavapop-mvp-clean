@@ -18,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.RepositoryHolder> {
 
-    private RepositoryContract.RepositoryPresenter presenter;
+    private final RepositoryContract.RepositoryPresenter presenter;
 
 
     public RepositoryAdapter(@NotNull RepositoryContract.RepositoryPresenter presenter) {
@@ -46,13 +46,13 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
 
     class RepositoryHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, RepositoryRowView {
-        TextView name;
-        TextView desc;
-        TextView forks;
-        TextView stars;
-        CircleImageView avatar;
-        TextView username;
-        TextView fullusername;
+        final TextView name;
+        final TextView desc;
+        final TextView forks;
+        final TextView stars;
+        final CircleImageView avatar;
+        final TextView username;
+        final TextView fullusername;
 
         RepositoryHolder(View itemView) {
             super(itemView);

@@ -8,13 +8,12 @@ public interface RepositoryContract {
     interface BaseListPresenter {
         void attachView(View view);
         void dettachView();
-        void onResume();
-        void onRefresh();
     }
 
     interface RepositoryPresenter extends BaseListPresenter {
         void onBindRepositoryRowViewAtPosition(int position, RepositoryRowView rowView);
         int getRepositoriesRowsCount();
         void onRepositoryChosen(int position);
+        void loadData();
     }
 }
