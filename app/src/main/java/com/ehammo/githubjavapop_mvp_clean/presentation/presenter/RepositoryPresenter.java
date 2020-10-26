@@ -40,11 +40,6 @@ public class RepositoryPresenter implements RepositoryContract.RepositoryPresent
     }
 
     @Override
-    public void onPause() {
-
-    }
-
-    @Override
     public void onRefresh() {
         if (mView != null) {
             mView.endProgress();
