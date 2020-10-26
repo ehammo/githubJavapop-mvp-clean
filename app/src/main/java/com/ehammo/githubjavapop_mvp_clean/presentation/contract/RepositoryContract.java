@@ -15,5 +15,6 @@ public interface RepositoryContract {
         int getRepositoriesRowsCount();
         void onRepositoryChosen(int position);
         void loadData();
+        void loadMoreData(int page);
     }
 }
