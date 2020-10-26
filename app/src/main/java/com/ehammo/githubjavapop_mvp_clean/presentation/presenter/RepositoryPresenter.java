@@ -10,11 +10,12 @@ import com.ehammo.githubjavapop_mvp_clean.ui.view.View;
 
 import org.jetbrains.annotations.NotNull;
 
-public class RepositoryPresenter implements RepositoryContract.RepositoryPresenter, InteractorCallback{
+public class RepositoryPresenter
+        implements RepositoryContract.RepositoryPresenter, InteractorCallback{
 
-    private RepositoryCollection mCollection;
+    private final RepositoryCollection mCollection;
     private View mView;
-    private IRepositoryInteractor mInteractor;
+    private final IRepositoryInteractor mInteractor;
 
     public RepositoryPresenter(@NotNull IRepositoryInteractor interactor) {
         this.mInteractor = interactor;

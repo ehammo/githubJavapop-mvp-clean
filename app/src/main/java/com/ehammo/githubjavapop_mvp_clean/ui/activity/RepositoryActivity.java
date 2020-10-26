@@ -1,10 +1,10 @@
 package com.ehammo.githubjavapop_mvp_clean.ui.activity;
 
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
@@ -46,7 +46,8 @@ public class RepositoryActivity extends AppCompatActivity
         mPlaceholder = findViewById(R.id.noRepositories);
 
         // todo : qm inicia o data store?
-        IDataSourceFactory dataSourceFactory = new DataSourceFactory(new NetworkManager(this));
+        IDataSourceFactory dataSourceFactory =
+                new DataSourceFactory(new NetworkManager(this));
         ICacheManager cacheManager = new CacheManager(new Handler());
         IDataStore dataStore = new DataStore(dataSourceFactory, cacheManager);
 //        IRepositoryInteractor interactor = new LoadRepositories(new LocalDataSource());
@@ -98,6 +99,5 @@ public class RepositoryActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         mPresenter.dettachView();
-        mPresenter.onPause();
     }
 }
