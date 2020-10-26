@@ -33,26 +33,11 @@ public class RepositoryPresenter
     }
 
     @Override
-    public void onResume() {
-        if (mView != null) {
-            mView.inProgress();
-            mInteractor.load(this);
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        if (mView != null) {
-            mView.endProgress();
-            mView.display(mCollection);
-        }
-    }
-
-    @Override
     public void onResultReceive(RepositoryCollection collection) {
+        mView.endProgress();
         mCollection.clear();
         mCollection.addAll(collection.iterator());
-        this.onRefresh();
+        mView.display(mCollection);
     }
 
     @Override
@@ -65,7 +50,16 @@ public class RepositoryPresenter
 
     @Override
     public void onRepositoryChosen(int position) {
+        Repository repository = mCollection.getElement(position);
+        mView.displayPR(repository);
+    }
 
+    @Override
+    public void loadData() {
+        if (mView != null) {
+            mView.inProgress();
+            mInteractor.load(this);
+        }
     }
 
     @Override

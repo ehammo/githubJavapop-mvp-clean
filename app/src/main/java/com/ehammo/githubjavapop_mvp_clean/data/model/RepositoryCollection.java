@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RepositoryCollection {
 
-    private List<Repository> mRepositories;
+    private final List<Repository> mRepositories;
 
     public RepositoryCollection() {
         mRepositories = new ArrayList<>();

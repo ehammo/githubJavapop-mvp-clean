@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class LoadRepositories implements IRepositoryInteractor, DataSource.RepositoryCallback {
 
-    private IDataStore mDataStore;
+    private final IDataStore mDataStore;
     private InteractorCallback mCallback;
 
     public LoadRepositories(@NotNull IDataStore dataStore) {

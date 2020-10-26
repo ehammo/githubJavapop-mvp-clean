@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DataSourceFactory implements IDataSourceFactory {
 
-    private NetworkManager networkManager;
+    private final NetworkManager networkManager;
 
     public DataSourceFactory(@NotNull NetworkManager networkManager) {
         this.networkManager = networkManager;
@@ -18,8 +18,10 @@ public class DataSourceFactory implements IDataSourceFactory {
 
     @Override
     public DataSource getDataSource() {
-        Log.d("DataSourceFactory", "Cache is valid: "+LocalDataSource.getInstance().isValid());
-        Log.d("DataSourceFactory", "network is valid: "+networkManager.isNetworkActive());
+        Log.d("DataSourceFactory", "Cache is valid: " +
+                LocalDataSource.getInstance().isValid());
+        Log.d("DataSourceFactory", "network is valid: " +
+                networkManager.isNetworkActive());
         if (LocalDataSource.getInstance().isValid()
                 || !networkManager.isNetworkActive()) {
             return LocalDataSource.getInstance();

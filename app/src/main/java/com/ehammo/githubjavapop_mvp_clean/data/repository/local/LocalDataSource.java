@@ -7,7 +7,8 @@ import com.ehammo.githubjavapop_mvp_clean.data.repository.DataSource;
 
 public class LocalDataSource implements CacheDataSource {
 
-    private RepositoryCollection repositoryCollection;
+    // TODO: use Room
+    private final RepositoryCollection repositoryCollection;
     private static CacheDataSource instance;
     private boolean isValid;
 

@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.util.Log;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.manager.NetworkManager;
@@ -31,9 +34,8 @@ public class RepositoryActivity extends AppCompatActivity
     private RepositoryContract.RepositoryPresenter mPresenter;
 
     private RecyclerView mRecyclerView;
-    private RelativeLayout mProgress;
-    private RelativeLayout mPlaceholder;
-
+    private SwipeRefreshLayout mPlaceholder;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RepositoryAdapter mRepositoryAdapter;
 
     @Override
@@ -41,9 +43,10 @@ public class RepositoryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repository);
 
-
-        mProgress = findViewById(R.id.progress);
-        mPlaceholder = findViewById(R.id.noRepositories);
+        mPlaceholder = findViewById(R.id.swipePlaceholder);
+        mPlaceholder.setOnRefreshListener(() -> mPresenter.loadData());
+        mSwipeRefreshLayout = findViewById(R.id.swipeLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.loadData());
 
         // todo : qm inicia o data store?
         IDataSourceFactory dataSourceFactory =
@@ -64,29 +67,37 @@ public class RepositoryActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         mPresenter.attachView(this);
-        mPresenter.onResume();
+        mPresenter.loadData();
     }
 
     public void inProgress(){
+        Log.d("RepositoryActivity", "in progress");
         mPlaceholder.setVisibility(android.view.View.GONE);
-        mProgress.setVisibility(android.view.View.VISIBLE);
-        mRecyclerView.setVisibility(android.view.View.VISIBLE);
+        mSwipeRefreshLayout.setVisibility(android.view.View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
-    public void endProgress(){ mProgress.setVisibility(android.view.View.GONE); }
+    public void endProgress() {
+        Log.d("RepositoryActivity", "end progress");
+        mSwipeRefreshLayout.setRefreshing(false);
+        mPlaceholder.setRefreshing(false);
+    }
 
     @Override
     public void display(RepositoryCollection repositories) {
-        Log.d("MainActivity", "notify");
+        Log.d("RepositoryActivity", "notify");
         mRepositoryAdapter.notifyDataSetChanged();
+        if (mRepositoryAdapter.getItemCount() == 0) {
+            showError("no repositories found");
+        }
     }
 
     @Override
     public void showError(String message) {
-        Log.e("MainActivity",message);
+        Log.e("RepositoryActivity", message);
         if(mPresenter.getRepositoriesRowsCount() == 0){
             mPlaceholder.setVisibility(android.view.View.VISIBLE);
-            mRecyclerView.setVisibility(android.view.View.GONE);
+            mSwipeRefreshLayout.setVisibility(android.view.View.GONE);
         }
     }
 
