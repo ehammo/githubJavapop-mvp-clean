@@ -1,6 +1,8 @@
 package com.ehammo.githubjavapop_mvp_clean.ui.activity;
 
 import android.os.Handler;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +39,7 @@ public class RepositoryActivity extends AppCompatActivity
     private SwipeRefreshLayout mPlaceholder;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RepositoryAdapter mRepositoryAdapter;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,18 @@ public class RepositoryActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.rvRepositories);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRepositoryAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (manager.findLastCompletelyVisibleItemPosition() ==
+                    mRepositoryAdapter.getItemCount() -1) {
+                    mPresenter.loadMoreData(page);
+                    page++;
+                }
+            }
+        });
     }
 
     @Override

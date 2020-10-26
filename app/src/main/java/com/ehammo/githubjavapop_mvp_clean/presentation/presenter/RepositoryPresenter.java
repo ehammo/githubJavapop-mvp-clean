@@ -16,6 +16,7 @@ public class RepositoryPresenter
     private final RepositoryCollection mCollection;
     private View mView;
     private final IRepositoryInteractor mInteractor;
+    private boolean appendData = false;
 
     public RepositoryPresenter(@NotNull IRepositoryInteractor interactor) {
         this.mInteractor = interactor;
@@ -35,7 +36,9 @@ public class RepositoryPresenter
     @Override
     public void onResultReceive(RepositoryCollection collection) {
         mView.endProgress();
-        mCollection.clear();
+        if (!appendData) mCollection.clear();
+        appendData = false;
+        // todo: change Repositorycollection to handle duplicates
         mCollection.addAll(collection.iterator());
         mView.display(mCollection);
     }
@@ -59,6 +62,15 @@ public class RepositoryPresenter
         if (mView != null) {
             mView.inProgress();
             mInteractor.load(this);
+        }
+    }
+
+    @Override
+    public void loadMoreData(int page) {
+        if (mView != null) {
+            mView.inProgress();
+            mInteractor.load(this, page);
+            appendData = true;
         }
     }
 
