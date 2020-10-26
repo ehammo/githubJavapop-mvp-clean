@@ -18,12 +18,13 @@ public class DataSourceFactory implements IDataSourceFactory {
 
     @Override
     public DataSource getDataSource() {
-        Log.d("DataSourceFactory", "Cache is valid: " +
+        Log.d("MainActivity", "Cache is valid: " +
                 LocalDataSource.getInstance().isValid());
-        Log.d("DataSourceFactory", "network is valid: " +
+        Log.d("MainActivity", "network is valid: " +
                 networkManager.isNetworkActive());
+        // todo : rethink cache strategy
         if (LocalDataSource.getInstance().isValid()
-                || !networkManager.isNetworkActive()) {
+                && !networkManager.isNetworkActive()) {
             return LocalDataSource.getInstance();
         } else {
             return RemoteDataSource.getInstance();

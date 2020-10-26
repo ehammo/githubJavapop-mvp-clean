@@ -118,6 +118,4 @@ public class Repository implements Serializable {
     public void setForksCount(Integer forksCount) {
         this.forksCount = forksCount;
     }
-
-
 }

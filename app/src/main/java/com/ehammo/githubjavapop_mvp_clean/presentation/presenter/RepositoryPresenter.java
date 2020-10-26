@@ -29,7 +29,7 @@ public class RepositoryPresenter
     }
 
     @Override
-    public void dettachView() {
+    public void detachView() {
         this.mView = null;
     }
 
@@ -38,8 +38,7 @@ public class RepositoryPresenter
         mView.endProgress();
         if (!appendData) mCollection.clear();
         appendData = false;
-        // todo: change Repositorycollection to handle duplicates
-        mCollection.addAll(collection.iterator());
+        mCollection.addAll(collection.toList());
         mView.display(mCollection);
     }
 
@@ -59,19 +58,20 @@ public class RepositoryPresenter
 
     @Override
     public void loadData() {
+        loadPage(0);
+    }
+
+    private void loadPage(int page) {
         if (mView != null) {
             mView.inProgress();
-            mInteractor.load(this);
+            mInteractor.load(this, page);
         }
     }
 
     @Override
     public void loadMoreData(int page) {
-        if (mView != null) {
-            mView.inProgress();
-            mInteractor.load(this, page);
-            appendData = true;
-        }
+        appendData = true;
+        loadPage(page);
     }
 
     @Override

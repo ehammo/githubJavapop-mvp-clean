@@ -7,7 +7,7 @@ public interface RepositoryContract {
 
     interface BaseListPresenter {
         void attachView(View view);
-        void dettachView();
+        void detachView();
     }
 
     interface RepositoryPresenter extends BaseListPresenter {

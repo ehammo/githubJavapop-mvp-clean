@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.manager.NetworkManager;
@@ -66,11 +64,13 @@ public class RepositoryActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mRepositoryAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if (manager.findLastCompletelyVisibleItemPosition() ==
-                    mRepositoryAdapter.getItemCount() -1) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager mng = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if ((mng != null ? mng.findLastCompletelyVisibleItemPosition() : 0) ==
+                    mRepositoryAdapter.getItemCount() - 1) {
+                    Log.d("MainActivity", "I am on item "+mRepositoryAdapter.getItemCount());
+                    Log.d("MainActivity", "load page "+page);
                     mPresenter.loadMoreData(page);
                     page++;
                 }
@@ -86,22 +86,22 @@ public class RepositoryActivity extends AppCompatActivity
     }
 
     public void inProgress(){
-        Log.d("RepositoryActivity", "in progress");
+        Log.d("MainActivity", "in progress");
         mPlaceholder.setVisibility(android.view.View.GONE);
         mSwipeRefreshLayout.setVisibility(android.view.View.VISIBLE);
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     public void endProgress() {
-        Log.d("RepositoryActivity", "end progress");
+        Log.d("MainActivity", "end progress");
         mSwipeRefreshLayout.setRefreshing(false);
         mPlaceholder.setRefreshing(false);
     }
 
     @Override
     public void display(RepositoryCollection repositories) {
-        Log.d("RepositoryActivity", "notify");
-        mRepositoryAdapter.notifyDataSetChanged();
+        Log.d("MainActivity", "notify");
+        mRecyclerView.post(() -> mRepositoryAdapter.notifyDataSetChanged());
         if (mRepositoryAdapter.getItemCount() == 0) {
             showError("no repositories found");
         }
@@ -109,7 +109,7 @@ public class RepositoryActivity extends AppCompatActivity
 
     @Override
     public void showError(String message) {
-        Log.e("RepositoryActivity", message);
+        Log.e("MainActivity", message);
         if(mPresenter.getRepositoriesRowsCount() == 0){
             mPlaceholder.setVisibility(android.view.View.VISIBLE);
             mSwipeRefreshLayout.setVisibility(android.view.View.GONE);
@@ -124,6 +124,6 @@ public class RepositoryActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        mPresenter.dettachView();
+        mPresenter.detachView();
     }
 }

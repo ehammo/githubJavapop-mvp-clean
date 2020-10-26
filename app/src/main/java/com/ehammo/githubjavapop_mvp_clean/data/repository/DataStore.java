@@ -31,9 +31,9 @@ public class DataStore implements IDataStore, DataSource.RepositoryCallback {
     }
 
     @Override
-    public void listRepositories(RepositoryCollection repositories) {
-        cacheManager.updateCache(repositories);
-        mCallback.listRepositories(repositories);
+    public void listRepositories(RepositoryCollection repositories, int page) {
+        cacheManager.updateCache(repositories, page);
+        mCallback.listRepositories(repositories, page);
     }
 
     @Override
