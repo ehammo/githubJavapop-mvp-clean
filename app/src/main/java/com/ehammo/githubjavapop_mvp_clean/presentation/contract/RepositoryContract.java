@@ -5,15 +5,14 @@ import com.ehammo.githubjavapop_mvp_clean.ui.view.View;
 
 public interface RepositoryContract {
 
-    interface BasePresenter {
+    interface BaseListPresenter {
         void attachView(View view);
         void dettachView();
         void onResume();
-        void onPause();
         void onRefresh();
     }
 
-    interface RepositoryPresenter extends BasePresenter{
+    interface RepositoryPresenter extends BaseListPresenter {
         void onBindRepositoryRowViewAtPosition(int position, RepositoryRowView rowView);
         int getRepositoriesRowsCount();
         void onRepositoryChosen(int position);
