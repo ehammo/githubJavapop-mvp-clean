@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.model.Repository;
+import com.ehammo.githubjavapop_mvp_clean.databinding.RvItemRepositoryBinding;
 import com.ehammo.githubjavapop_mvp_clean.presentation.contract.RepositoryContract;
 import com.ehammo.githubjavapop_mvp_clean.ui.view.RepositoryRowView;
 
@@ -30,7 +31,7 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
     public RepositoryHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.element_repository, parent, false);
+        View view = inflater.inflate(R.layout.rv_item_repository, parent, false);
         return new RepositoryHolder(view);
     }
 
@@ -54,15 +55,16 @@ public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.Re
         final TextView username;
         final TextView fullusername;
 
-        RepositoryHolder(View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.tvName);
-            desc = itemView.findViewById(R.id.tvDesc);
-            forks = itemView.findViewById(R.id.tvForks);
-            stars = itemView.findViewById(R.id.tvStars);
-            avatar = itemView.findViewById(R.id.ivAvatar);
-            username = itemView.findViewById(R.id.tvUsername);
-            fullusername = itemView.findViewById(R.id.tvFullUserName);
+        RepositoryHolder(View view) {
+            super(view);
+            RvItemRepositoryBinding bind = RvItemRepositoryBinding.bind(view);
+            name = bind.tvName;
+            desc = bind.tvDesc;
+            forks = bind.tvForks;
+            stars = bind.tvStars;
+            avatar = bind.ivAvatar;
+            username = bind.tvUsername;
+            fullusername = bind.tvFullUserName;
             itemView.setOnClickListener(this);
         }
 
