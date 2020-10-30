@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import com.ehammo.githubjavapop_mvp_clean.R;
 import com.ehammo.githubjavapop_mvp_clean.data.manager.NetworkManager;
@@ -21,6 +22,7 @@ import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataStore;
 import com.ehammo.githubjavapop_mvp_clean.data.manager.CacheManager;
 import com.ehammo.githubjavapop_mvp_clean.data.manager.ICacheManager;
 import com.ehammo.githubjavapop_mvp_clean.data.repository.IDataSourceFactory;
+import com.ehammo.githubjavapop_mvp_clean.databinding.ActivityRepositoryBinding;
 import com.ehammo.githubjavapop_mvp_clean.domain.interactor.IRepositoryInteractor;
 import com.ehammo.githubjavapop_mvp_clean.domain.usecase.LoadRepositories;
 import com.ehammo.githubjavapop_mvp_clean.ui.adapter.RepositoryAdapter;
@@ -42,14 +44,10 @@ public class RepositoryActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repository);
+        ActivityRepositoryBinding bind = ActivityRepositoryBinding
+                .inflate(LayoutInflater.from(this));
 
-        mPlaceholder = findViewById(R.id.swipePlaceholder);
-        mPlaceholder.setOnRefreshListener(() -> mPresenter.loadData());
-        mSwipeRefreshLayout = findViewById(R.id.swipeLayout);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.loadData());
-
-        // todo : qm inicia o data store?
+        // todo : add Dagger
         IDataSourceFactory dataSourceFactory =
                 new DataSourceFactory(new NetworkManager(this));
         ICacheManager cacheManager = new CacheManager(new Handler());
@@ -57,9 +55,14 @@ public class RepositoryActivity extends AppCompatActivity
 //        IRepositoryInteractor interactor = new LoadRepositories(new LocalDataSource());
         IRepositoryInteractor interactor = new LoadRepositories(dataStore);
         mPresenter = new RepositoryPresenter(interactor);
-        mRepositoryAdapter = new RepositoryAdapter(mPresenter);
 
-        mRecyclerView = findViewById(R.id.rvRepositories);
+        mPlaceholder = bind.swipePlaceholder;
+        mPlaceholder.setOnRefreshListener(() -> mPresenter.loadData());
+        mSwipeRefreshLayout = bind.swipeLayout;
+        mSwipeRefreshLayout.setOnRefreshListener(() -> mPresenter.loadData());
+        mRecyclerView = bind.rvRepositories;
+
+        mRepositoryAdapter = new RepositoryAdapter(mPresenter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRepositoryAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -69,13 +72,12 @@ public class RepositoryActivity extends AppCompatActivity
                 LinearLayoutManager mng = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if ((mng != null ? mng.findLastCompletelyVisibleItemPosition() : 0) ==
                     mRepositoryAdapter.getItemCount() - 1) {
-                    Log.d("MainActivity", "I am on item "+mRepositoryAdapter.getItemCount());
-                    Log.d("MainActivity", "load page "+page);
                     mPresenter.loadMoreData(page);
                     page++;
                 }
             }
         });
+        setContentView(bind.getRoot());
     }
 
     @Override
@@ -119,7 +121,7 @@ public class RepositoryActivity extends AppCompatActivity
     @Override
     public void displayPR(Repository rep) {
 
-    }
+       }
 
     @Override
     protected void onPause() {
